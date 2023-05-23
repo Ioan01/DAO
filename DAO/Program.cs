@@ -16,12 +16,7 @@ namespace DAO
             repo.saveCar(new Car() { Name = "benveu seria septe", Hp = 200, Cool = true, Speed = 300.9 });
             
             
-            var list = repo.findAll();
             
-            // foreach (var car in list)
-            // {
-            //     Console.WriteLine(car);
-            // }
             
             Console.WriteLine(repo.findById(22));
             
@@ -39,6 +34,15 @@ namespace DAO
 
             Console.WriteLine(repo.findByNameAndSpeedAndHp("benveu seria septe",300.9,200));
 
+
+            repo.deleteAllCar();
+
+            var list = repo.findAll();
+
+            foreach (var car in list)
+            {
+                Console.WriteLine(car);
+            }
 
 
         }

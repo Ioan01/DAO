@@ -23,5 +23,7 @@ namespace DAO
 
         public void deleteCarByNameAndHp(string name, int hp);
 
+        public void deleteAllCar();
+
     }
 }

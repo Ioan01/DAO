@@ -71,8 +71,9 @@ namespace DAO
             query.Append($"DELETE FROM {Schema}.");
             if (methodName.ToLower().Contains("all"))
             {
-                tableName = methodName.Substring(methodName.IndexOf("all"));
-                
+                tableName = methodName.ToLower().Substring(methodName.IndexOf("All") + "All".Length);
+                query.Append($"{tableName} ");
+
             }
             else
             {
