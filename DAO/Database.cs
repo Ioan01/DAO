@@ -26,7 +26,10 @@ namespace DAO
         {
             var proxy = DispatchProxy.Create<T, RepositoryProxy>();
             (proxy as RepositoryProxy).DataSource = DataSource;
-            (proxy as RepositoryProxy).Schema = Schema;
+
+            if (typeof(T).Name.Contains("Repository"))
+                (proxy as RepositoryProxy).Table = $"{Schema}.{typeof(T).Name.Replace("Repository","")}";
+            else (proxy as RepositoryProxy).Table = $"{Schema}.{typeof(T).Name}";
 
             return proxy;
         }

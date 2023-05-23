@@ -12,37 +12,44 @@ namespace DAO
 
             var repo = database.CreateRepository<CarRepository>();
 
-            repo.saveCar(new Car(){Name = "benveu",Hp = 200,Cool = true,Speed = 300.9});
-            repo.saveCar(new Car() { Name = "benveu seria septe", Hp = 200, Cool = true, Speed = 300.9 });
-            
-            
-            
-            
-            Console.WriteLine(repo.findById(22));
-            
-            foreach (var car in repo.findByNameAndHp("benveu",200))
-            {
-                Console.WriteLine(car);
-            }
+            // repo.saveCar(new Car(){Name = "benveu",Hp = 200,Cool = true,Speed = 300.9});
+            // repo.saveCar(new Car() { Name = "benveu seria septe", Hp = 200, Cool = true, Speed = 300.9 });
+            //
+            //
+            //
+            //
+            // Console.WriteLine(repo.findById(22));
+            //
+            // foreach (var car in repo.findByNameAndHp("benveu",200))
+            // {
+            //     Console.WriteLine(car);
+            // }
+            //
+            // repo.deleteByNameAndHp("benveu",200);
+            //
+            // foreach (var car in repo.findByNameAndHp("benveu", 200))
+            // {
+            //     Console.WriteLine(car);
+            // }
+            //
+            // Console.WriteLine(repo.findByNameAndSpeedAndHp("benveu seria septe",300.9,200));
+            //
+            //
+            // repo.deleteAll();
+            //
+            // var list = repo.findAll();
+            //
+            // foreach (var car in list)
+            // {
+            //     Console.WriteLine(car);
+            // }
 
-            repo.deleteCarByNameAndHp("benveu",200);
+            repo.deleteByNameAndHp("benveu",200);
+            repo.deleteAll();
 
-            foreach (var car in repo.findByNameAndHp("benveu", 200))
-            {
-                Console.WriteLine(car);
-            }
+            repo.saveCar(new Car() { Cool = true, Hp = 500, Name = "Benveu", Speed = 300 });
 
-            Console.WriteLine(repo.findByNameAndSpeedAndHp("benveu seria septe",300.9,200));
-
-
-            repo.deleteAllCar();
-
-            var list = repo.findAll();
-
-            foreach (var car in list)
-            {
-                Console.WriteLine(car);
-            }
+            repo.findByNameAndSpeedAndHp("benveu", 200, 300);
 
 
         }

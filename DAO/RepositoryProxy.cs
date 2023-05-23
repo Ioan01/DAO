@@ -28,6 +28,7 @@ namespace DAO
         public NpgsqlDataSource DataSource { private get; set; }
 
         public String Schema { private get; set; }
+        public string Table { get; set; }
 
         private static CommandType GetType(string functionName)
         {
@@ -64,28 +65,12 @@ namespace DAO
 
         private string BuildDelete(StringBuilder query, MethodInfo methodInfo, object?[]? args)
         {
-            var methodName = methodInfo.Name;
+            query.Append($"DELETE FROM {Table} ");
 
-            string tableName;
-
-            query.Append($"DELETE FROM {Schema}.");
-            if (methodName.ToLower().Contains("all"))
+            if (!methodInfo.Name.ToLower().Contains("all"))
             {
-                tableName = methodName.ToLower().Substring(methodName.IndexOf("All") + "All".Length);
-                query.Append($"{tableName} ");
-
+                BuildWhere(query,methodInfo,args,"deleteBy".Length);
             }
-            else
-            {
-                tableName = methodName.Substring("delete".Length, methodName.IndexOf("By") - "delete".Length);
-                query.Append($"{tableName} ");
-                BuildWhere(query, methodInfo, args, "deleteBy".Length + tableName.Length);
-            }
-
-            
-
-
-            
             
 
             return query.ToString();
@@ -98,8 +83,7 @@ namespace DAO
                 single = !(methodInfo.ReturnType.GetGenericTypeDefinition() == typeof(IEnumerable<>));
             else single = true;
 
-            var table = single ? methodInfo.ReturnType.Name : methodInfo.ReturnType.GenericTypeArguments[0].Name;
-            query.Append($"SELECT * FROM {Schema}.{table} ");
+            query.Append($"SELECT * FROM {Table} ");
 
             if (methodInfo.Name.ToLower().EndsWith("all"))
             {
@@ -166,7 +150,7 @@ namespace DAO
 
             var obj = args[0];
 
-            query.Append($"INSERT INTO {Schema}.{methodInfo.GetParameters()[0].ParameterType.Name}(");
+            query.Append($"INSERT INTO {Table}(");
 
             var properties = obj.GetType().GetProperties()
                 .Where(pr => pr.CustomAttributes.All(attr => attr.AttributeType != typeof(PrimaryKey)));

@@ -21,9 +21,9 @@ namespace DAO
 
         public IEnumerable<Car> findByNameAndSpeedAndHp(string name, double speed,int hp);
 
-        public void deleteCarByNameAndHp(string name, int hp);
+        public void deleteByNameAndHp(string name, int hp);
 
-        public void deleteAllCar();
+        public void deleteAll();
 
     }
 }
